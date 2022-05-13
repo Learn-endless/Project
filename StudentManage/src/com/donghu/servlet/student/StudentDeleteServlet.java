@@ -6,7 +6,9 @@ package com.donghu.servlet.student; /**
  * Time: 22:14
  */
 
+import com.alibaba.fastjson.JSON;
 import com.donghu.dao.StudentDao;
+import com.donghu.pojo.Result;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -27,12 +29,20 @@ public class StudentDeleteServlet extends HttpServlet {
         //转一下类型
         int id = Integer.parseInt(student_id);
         //调用dao层的方来在数据库中删除
-        StudentDao.deleteStudent(id);
-        //更新session中students的值
-        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
-        HttpSession session = request.getSession();
-        session.setAttribute("students",students);
-        response.sendRedirect("studentList.jsp");
+        int res = StudentDao.deleteStudent(id);
+//        //更新session中students的值
+//        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
+//        HttpSession session = request.getSession();
+//        session.setAttribute("students",students);
+//        response.sendRedirect("studentList.jsp");
+
+        Result result = new Result();
+        if(res > 0){
+            result.setFlag("success");
+        }else{
+            result.setFlag("fail");
+        }
+        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override

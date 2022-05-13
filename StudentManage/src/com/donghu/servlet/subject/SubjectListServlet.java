@@ -6,7 +6,9 @@ package com.donghu.servlet.subject; /**
  * Time: 14:42
  */
 
+import com.alibaba.fastjson.JSON;
 import com.donghu.dao.SubjectDao;
+import com.donghu.pojo.Result;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,12 +27,15 @@ public class SubjectListServlet extends HttpServlet {
 
         //从Dao层拿到 课程列表
         ArrayList<HashMap<String, Object>> subjects = SubjectDao.selectSubjectList();
-        //获取Session 对象
-        HttpSession session = request.getSession();
-        //存放到session中
-        session.setAttribute("subjects",subjects);
-        //重定向
-        response.sendRedirect("subjectList.jsp");
+//        //获取Session 对象
+//        HttpSession session = request.getSession();
+//        //存放到session中
+//        session.setAttribute("subjects",subjects);
+//        //重定向
+//        response.sendRedirect("subjectList.jsp");
+        Result result = new Result("success",subjects);
+        response.getWriter().append(JSON.toJSONString(result));
+
     }
 
     @Override

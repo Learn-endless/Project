@@ -6,7 +6,9 @@ package com.donghu.servlet.subject; /**
  * Time: 19:03
  */
 
+import com.alibaba.fastjson.JSON;
 import com.donghu.dao.SubjectDao;
+import com.donghu.pojo.Result;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -28,12 +30,20 @@ public class SubjectDeleteServlet extends HttpServlet {
         int id = Integer.parseInt(subject_id);
 
         //调用dao层的删除方法
-        SubjectDao.deleteSubject(id);
-        //更新session中的数据
-        ArrayList<HashMap<String, Object>> subjects = SubjectDao.selectSubjectList();
-        HttpSession session = request.getSession();
-        session.setAttribute("subjects",subjects);
-        response.sendRedirect("subjectList.jsp");
+        int res = SubjectDao.deleteSubject(id);
+//        //更新session中的数据
+//        ArrayList<HashMap<String, Object>> subjects = SubjectDao.selectSubjectList();
+//        HttpSession session = request.getSession();
+//        session.setAttribute("subjects",subjects);
+//        response.sendRedirect("subjectList.jsp");
+
+        Result result = new Result();
+        if(res > 0){
+            result.setFlag("success");
+        }else{
+            result.setFlag("fail");
+        }
+        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override

@@ -6,7 +6,9 @@ package com.donghu.servlet.student; /**
  * Time: 21:49
  */
 
+import com.alibaba.fastjson.JSON;
 import com.donghu.dao.StudentDao;
+import com.donghu.pojo.Result;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -33,12 +35,20 @@ public class StudentUpdateServlet extends HttpServlet {
         int subjectId = Integer.parseInt(student_subject);
 
         //调用dao层的修改方法
-        StudentDao.updateStudent(id,student_name,student_gender,subjectId);
-        //更新session
-        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
-        HttpSession session = request.getSession();
-        session.setAttribute("students",students);
-        response.sendRedirect("studentList.jsp");
+        int res = StudentDao.updateStudent(id,student_name,student_gender,subjectId);
+//        //更新session
+//        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
+//        HttpSession session = request.getSession();
+//        session.setAttribute("students",students);
+//        response.sendRedirect("studentList.jsp");
+
+        Result result = new Result();
+        if(res > 0){
+            result.setFlag("success");
+        }else{
+            result.setFlag("fail");
+        }
+        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override

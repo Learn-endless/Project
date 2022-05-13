@@ -6,7 +6,9 @@ package com.donghu.servlet.student; /**
  * Time: 19:59
  */
 
+import com.alibaba.fastjson.JSON;
 import com.donghu.dao.StudentDao;
+import com.donghu.pojo.Result;
 
 import javax.jnlp.IntegrationService;
 import javax.servlet.*;
@@ -31,13 +33,21 @@ public class StudentAddServlet extends HttpServlet {
         //转化类型
         int subjectId = Integer.parseInt(student_subject);
         //调用dao层的新增数据方法
-        StudentDao.insertStudent(student_name,student_gender,subjectId);
+        int res = StudentDao.insertStudent(student_name,student_gender,subjectId);
 
-        //更新session
-        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
-        HttpSession session = request.getSession();
-        session.setAttribute("students",students);
-        response.sendRedirect("studentList.jsp");
+//        //更新session
+//        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
+//        HttpSession session = request.getSession();
+//        session.setAttribute("students",students);
+//        response.sendRedirect("studentList.jsp");
+
+        Result result = new Result();
+        if(res > 0){
+            result.setFlag("success");
+        }else{
+            result.setFlag("fail");
+        }
+        response.getWriter().append(JSON.toJSONString(result));
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -6,7 +6,9 @@ package com.donghu.servlet.subject; /**
  * Time: 17:03
  */
 
+import com.alibaba.fastjson.JSON;
 import com.donghu.dao.SubjectDao;
+import com.donghu.pojo.Result;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -23,14 +25,19 @@ public class ToModifySubjectServlet extends HttpServlet {
 
         //获取需要修改的课程ID
         String subject_id = request.getParameter("id");
+        System.out.println(subject_id);
         //通过课程ID获取课程数据
         int id = Integer.parseInt(subject_id);
         HashMap<String, Object> subject = SubjectDao.getById(id);
 
-        //放到session中
-        HttpSession session = request.getSession();
-        session.setAttribute("subject",subject);
-        response.sendRedirect("subjectUpdate.jsp");
+        System.out.println(subject);
+
+//        //放到session中
+//        HttpSession session = request.getSession();
+//        session.setAttribute("subject",subject);
+//        response.sendRedirect("subjectUpdate.jsp");
+        Result result = new Result("success",subject);
+        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override
