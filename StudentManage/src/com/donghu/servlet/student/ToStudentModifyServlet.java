@@ -29,13 +29,13 @@ public class ToStudentModifyServlet extends HttpServlet {
         int id = Integer.parseInt(student_id);
         //调用dao层方法拿到ID对应的学生的信息(学生信息加课程信息)
         HashMap<String, Object> student = StudentDao.getById(id);
-//        //存放到session中
-//        HttpSession session = request.getSession();
-//        session.setAttribute("student",student);
-//        response.sendRedirect("studentUpdate.jsp");
+        //存放到session中
+        HttpSession session = request.getSession();
+        session.setAttribute("student",student);
+        response.sendRedirect("studentUpdate.jsp");
 
-        Result result = new Result("success",student);
-        response.getWriter().append(JSON.toJSONString(result));
+//        Result result = new Result("success",student);
+//        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override

@@ -17,9 +17,9 @@
 %>
 
 <form action="subjectUpdate" method="post">
-     <input type="hidden" name="subject_id" value="<%=subject.get("subject_id")%>">
-     名称:<input type="text" name="subject_name" value="<%=subject.get("subject_name")%>"><br>
-     学分:<input type="text" name="subject_credit" value="<%=subject.get("subject_credit")%>"><br>
+     <input type="hidden" name="id" value="<%=subject.get("subject_id")%>">
+     名称:<input type="text" name="name" value="<%=subject.get("subject_name")%>"><br>
+     学分:<input type="text" name="credit" value="<%=subject.get("subject_credit")%>"><br>
     <input type="submit" value="修改">&nbsp;&nbsp;<a href="subjectList.jsp">返回课程列表</a>
 </form>
 </body>

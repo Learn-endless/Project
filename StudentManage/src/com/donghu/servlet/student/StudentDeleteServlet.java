@@ -30,19 +30,19 @@ public class StudentDeleteServlet extends HttpServlet {
         int id = Integer.parseInt(student_id);
         //调用dao层的方来在数据库中删除
         int res = StudentDao.deleteStudent(id);
-//        //更新session中students的值
-//        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
-//        HttpSession session = request.getSession();
-//        session.setAttribute("students",students);
-//        response.sendRedirect("studentList.jsp");
+        //更新session中students的值
+        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
+        HttpSession session = request.getSession();
+        session.setAttribute("students",students);
+        response.sendRedirect("studentList.jsp");
 
-        Result result = new Result();
-        if(res > 0){
-            result.setFlag("success");
-        }else{
-            result.setFlag("fail");
-        }
-        response.getWriter().append(JSON.toJSONString(result));
+//        Result result = new Result();
+//        if(res > 0){
+//            result.setFlag("success");
+//        }else{
+//            result.setFlag("fail");
+//        }
+//        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override

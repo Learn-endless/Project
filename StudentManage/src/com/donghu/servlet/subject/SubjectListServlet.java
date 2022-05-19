@@ -27,14 +27,14 @@ public class SubjectListServlet extends HttpServlet {
 
         //从Dao层拿到 课程列表
         ArrayList<HashMap<String, Object>> subjects = SubjectDao.selectSubjectList();
-//        //获取Session 对象
-//        HttpSession session = request.getSession();
-//        //存放到session中
-//        session.setAttribute("subjects",subjects);
-//        //重定向
-//        response.sendRedirect("subjectList.jsp");
-        Result result = new Result("success",subjects);
-        response.getWriter().append(JSON.toJSONString(result));
+        //获取Session 对象
+        HttpSession session = request.getSession();
+        //存放到session中
+        session.setAttribute("subjects",subjects);
+        //重定向
+        response.sendRedirect("subjectList.jsp");
+//        Result result = new Result("success",subjects);
+//        response.getWriter().append(JSON.toJSONString(result));
 
     }
 

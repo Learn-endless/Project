@@ -32,12 +32,12 @@ public class ToModifySubjectServlet extends HttpServlet {
 
         System.out.println(subject);
 
-//        //放到session中
-//        HttpSession session = request.getSession();
-//        session.setAttribute("subject",subject);
-//        response.sendRedirect("subjectUpdate.jsp");
-        Result result = new Result("success",subject);
-        response.getWriter().append(JSON.toJSONString(result));
+        //放到session中
+        HttpSession session = request.getSession();
+        session.setAttribute("subject",subject);
+        response.sendRedirect("subjectUpdate.jsp");
+//        Result result = new Result("success",subject);
+//        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override

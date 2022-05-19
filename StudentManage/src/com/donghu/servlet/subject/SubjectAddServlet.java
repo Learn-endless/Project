@@ -36,19 +36,19 @@ public class SubjectAddServlet extends HttpServlet {
         //调用dao层的新增方法
         int res = SubjectDao.insertSubject(subject_name, credit);
         System.out.println(res);    //打印下被影响的行数
-//
-//        //重新更新session中的数据
-//        ArrayList<HashMap<String, Object>> subjects = SubjectDao.selectSubjectList();
-//        HttpSession session = request.getSession();
-//        session.setAttribute("subjects",subjects);
-//        response.sendRedirect("subjectList.jsp");
-        Result result = new Result();
-        if(res > 0){
-            result.setFlag("success");
-        }else{
-            result.setFlag("fail");
-        }
-        response.getWriter().append(JSON.toJSONString(result));
+
+        //重新更新session中的数据
+        ArrayList<HashMap<String, Object>> subjects = SubjectDao.selectSubjectList();
+        HttpSession session = request.getSession();
+        session.setAttribute("subjects",subjects);
+        response.sendRedirect("subjectList.jsp");
+//        Result result = new Result();
+//        if(res > 0){
+//            result.setFlag("success");
+//        }else{
+//            result.setFlag("fail");
+//        }
+//        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override

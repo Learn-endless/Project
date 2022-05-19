@@ -31,19 +31,19 @@ public class SubjectDeleteServlet extends HttpServlet {
 
         //调用dao层的删除方法
         int res = SubjectDao.deleteSubject(id);
-//        //更新session中的数据
-//        ArrayList<HashMap<String, Object>> subjects = SubjectDao.selectSubjectList();
-//        HttpSession session = request.getSession();
-//        session.setAttribute("subjects",subjects);
-//        response.sendRedirect("subjectList.jsp");
+        //更新session中的数据
+        ArrayList<HashMap<String, Object>> subjects = SubjectDao.selectSubjectList();
+        HttpSession session = request.getSession();
+        session.setAttribute("subjects",subjects);
+        response.sendRedirect("subjectList.jsp");
 
-        Result result = new Result();
-        if(res > 0){
-            result.setFlag("success");
-        }else{
-            result.setFlag("fail");
-        }
-        response.getWriter().append(JSON.toJSONString(result));
+//        Result result = new Result();
+//        if(res > 0){
+//            result.setFlag("success");
+//        }else{
+//            result.setFlag("fail");
+//        }
+//        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override

@@ -27,15 +27,15 @@ public class StudentListServlet extends HttpServlet {
 
         //调用dao层的学生查询方法
         ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
-//        //为了防止第一次直接进入student列表，所以这里也需要获取一遍课程列表
-//        ArrayList<HashMap<String,Object>> subjects = SubjectDao.selectSubjectList();
-//        //存放到session中
-//        HttpSession session = request.getSession();
-//        session.setAttribute("students",students);
-//        session.setAttribute("subjects",subjects);
-//        response.sendRedirect("studentList.jsp");
-        Result result = new Result("success",students);
-        response.getWriter().append(JSON.toJSONString(result));
+        //为了防止第一次直接进入student列表，所以这里也需要获取一遍课程列表
+        ArrayList<HashMap<String,Object>> subjects = SubjectDao.selectSubjectList();
+        //存放到session中
+        HttpSession session = request.getSession();
+        session.setAttribute("students",students);
+        session.setAttribute("subjects",subjects);
+        response.sendRedirect("studentList.jsp");
+//        Result result = new Result("success",students);
+//        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override

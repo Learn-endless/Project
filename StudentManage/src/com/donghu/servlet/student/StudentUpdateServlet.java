@@ -36,19 +36,19 @@ public class StudentUpdateServlet extends HttpServlet {
 
         //调用dao层的修改方法
         int res = StudentDao.updateStudent(id,student_name,student_gender,subjectId);
-//        //更新session
-//        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
-//        HttpSession session = request.getSession();
-//        session.setAttribute("students",students);
-//        response.sendRedirect("studentList.jsp");
+        //更新session
+        ArrayList<HashMap<String, Object>> students = StudentDao.selectStudent();
+        HttpSession session = request.getSession();
+        session.setAttribute("students",students);
+        response.sendRedirect("studentList.jsp");
 
-        Result result = new Result();
-        if(res > 0){
-            result.setFlag("success");
-        }else{
-            result.setFlag("fail");
-        }
-        response.getWriter().append(JSON.toJSONString(result));
+//        Result result = new Result();
+//        if(res > 0){
+//            result.setFlag("success");
+//        }else{
+//            result.setFlag("fail");
+//        }
+//        response.getWriter().append(JSON.toJSONString(result));
     }
 
     @Override
