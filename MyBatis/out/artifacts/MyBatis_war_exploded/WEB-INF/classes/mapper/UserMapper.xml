@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qcby.dao.UserDao">
+    <!-- 通过id查询 -->
+    <select id="find" resultType="com.qcby.enty.User" parameterType="java.lang.Integer">
+        select * from user where id = #{id}
+    </select>
+    <!-- 查询全部 -->
+    <select id ="findAll" resultType="com.qcby.enty.User">
+        select * from user
+    </select>
+    <!-- 添加操作 -->
+    <insert id="add" parameterType="com.qcby.enty.User">
+        insert into user values(#{id},#{username},#{birthday},#{sex},#{address})
+    </insert>
+    <!-- 通过id删除用户信息 -->
+    <delete id="del" parameterType="java.lang.Integer">
+        delete from user where id = #{id}
+    </delete>
+    <update id="update" parameterType="com.qcby.enty.User">
+        update user set username=#{username},birthday=#{birthday},sex=#{sex},address=#{address} where id = #{id}
+    </update>
+</mapper>
