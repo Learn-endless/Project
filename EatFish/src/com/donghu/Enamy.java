@@ -3,7 +3,7 @@ package com.donghu;
 import java.awt.*;
 
 //7-2 创建敌方鱼类
-public class Enamy {
+public abstract class Enamy {
     //定义图片
     Image img;
     //坐标
@@ -39,12 +39,5 @@ public class Enamy {
     //碰撞检测方法
     public Rectangle grtRect(){
         return new Rectangle(x,y,width,height);
-    }
-    //敌方鱼的左类
-    static class Enamy_1_L extends Enamy{
-        Enamy_1_L(){
-            super(GameUtils.enamy1_img,45,(int)(Math.random()*700+100),45,69,5,1,1,0);
-
-        }
     }
 }

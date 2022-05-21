@@ -2,9 +2,10 @@ package com.donghu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
 
 /*
 窗口的创建
@@ -25,7 +26,17 @@ public class GameWin extends JFrame {
     //设置游戏默认状态:
     public int state = 0;
 
-    Enamy enamy;
+    //地方鱼类
+    Enamy enamy1_right;
+    Enamy enamy2_right;
+    Enamy enamy3_right;
+
+    Enamy enamy1_left;
+    Enamy enamy2_left;
+    Enamy enamy3_left;
+
+    //我方鱼类
+    MyFish myFish = new MyFish();
 
     //6-1模块
     Image offScreenimg;
@@ -50,7 +61,7 @@ public class GameWin extends JFrame {
         //7.设置窗口位置居中
         this.setLocationRelativeTo(null);
         //8.设置窗口标题
-        this.setTitle("皇家学院:大鱼吃小鱼");
+        this.setTitle("东湖学院:大鱼吃小鱼");
         //9.设置窗口关闭的按钮
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //4-1启动页面的点击事件
@@ -68,6 +79,50 @@ public class GameWin extends JFrame {
                 }
             }
         });
+
+        //键盘移动
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                //wasd
+                //键盘的按压
+                if(e.getKeyCode()==87){
+                    GameUtils.UP = true;
+                }
+                if(e.getKeyCode()==83){
+                    GameUtils.DOWN = true;
+                }
+                if(e.getKeyCode()==65){
+                    GameUtils.LEFT = true;
+                }
+                if(e.getKeyCode()==68){
+                    GameUtils.RIGHT = true;
+                }
+            }
+
+            //抬起
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                //wasd
+                //键盘的抬起
+                if(e.getKeyCode()==87){
+                    GameUtils.UP = false;
+                }
+                if(e.getKeyCode()==83){
+                    GameUtils.DOWN = false;
+                }
+                if(e.getKeyCode()==65){
+                    GameUtils.LEFT = false;
+                }
+                if(e.getKeyCode()==68){
+                    GameUtils.RIGHT = false;
+                }
+            }
+        });
+
+
         //5-5 定义背景图片的循环使用，需要重复调用paint方法，所以在launch方法中添加一个while循环
         //每隔40毫秒调用一次paint方法
         while(true){
@@ -88,6 +143,7 @@ public class GameWin extends JFrame {
         //6-3 懒加载模式初始化对象
         offScreenimg = createImage(width,height);
         Graphics gImage = offScreenimg.getGraphics();
+        bg.paintSelf(gImage);
         //14.在paint方法中，用switch语句定义游戏状态
         switch (state){
             case 0:
@@ -102,7 +158,7 @@ public class GameWin extends JFrame {
                 break;
             case 1:
                 //6-5
-                bg.paintSelf(gImage);
+                myFish.paintSelf(gImage);
                 logic();
                 for(Enamy e:GameUtils.EnamyList){
                     e.paintSelf(gImage);
@@ -125,9 +181,20 @@ public class GameWin extends JFrame {
     //9-2批量添加敌方鱼类
     void logic(){
         //每调用10次paint方法，绘制一条鱼
-        if (time % 20 == 0) {
-            enamy = new Enamy.Enamy_1_L();
-            GameUtils.EnamyList.add(enamy);
+        if (time % 60 == 0) {
+            enamy1_right = new Enamy1Right();
+            enamy2_right = new Enamy2Right();
+            enamy3_right = new Enamy3Right();
+            enamy1_left = new Enamy1Left();
+            enamy2_left = new Enamy2Left();
+            enamy3_left = new Enamy3Left();
+
+            GameUtils.EnamyList.add(enamy1_right);
+            GameUtils.EnamyList.add(enamy2_right);
+            GameUtils.EnamyList.add(enamy3_right);
+            GameUtils.EnamyList.add(enamy1_left);
+            GameUtils.EnamyList.add(enamy2_left);
+            GameUtils.EnamyList.add(enamy3_left);
         }
         for(Enamy enamy:GameUtils.EnamyList){
             enamy.x = enamy.x+enamy.dir*enamy.speed;
