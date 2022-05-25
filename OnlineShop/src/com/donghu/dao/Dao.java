@@ -54,9 +54,7 @@ public class Dao {
         }
     }
 
-    /**
-     * 用户登录模块
-     */
+    //用户登录
     public static int login(String email, String password){
         //先通过email查找
         String sql = "select * from user where email = ?";
@@ -91,7 +89,7 @@ public class Dao {
         //计算当前商品的总价格
         price *= goodsNum;
         //进行下四舍五入
-        float scale = (float) price;
+        float scale = price;
         DecimalFormat fnum = new DecimalFormat("##0.00");
         String priceStr = fnum.format(scale);
 
@@ -99,10 +97,9 @@ public class Dao {
         String sql2 = "insert into order_info values(null,?,?,?,?,?,?,?,?)";
         Object imgUrl = list.get(0).get("imgUrl");
         Object name = list.get(0).get("name");
-
         Object buy_time = new Date();
         Object pay_time = new Date();
-        Object status = 0;
+        Object status = 0;     //状态：0 未付款  1 已支付
         //将数据插入数据库
         return MyHelper.executeUpdate(sql2, new Object[]{imgUrl, name, goodsNum, priceStr, buy_time, pay_time, status, email});
     }

@@ -18,7 +18,8 @@ import java.io.IOException;
 @WebServlet("/signUp")
 public class SignUpServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         //设置编码字符集
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
@@ -27,13 +28,9 @@ public class SignUpServlet extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-
         int res = 0;
-        //首先验证两次输入的密码是否一样
-        if(password.equals(confirmPassword)){
-            //3.调用dao层的方法，将用户的信息存放到数据库中。
-            res = Dao.signUp(email, name, password);
-        }
+        //3.调用dao层的方法，将用户的信息存放到数据库中。
+        res = Dao.signUp(email, name, password);
         Result result = new Result();
         if(res > 0){
             result.setFlag("success");

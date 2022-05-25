@@ -17,7 +17,6 @@ $(document).ready(function(){
 		$('#payItemTip').modal('show');
 	})
 	
-	
 	//确定付款
 	$('.paySure').on('click', function() {
 		$('#payItemTip').modal('hide');

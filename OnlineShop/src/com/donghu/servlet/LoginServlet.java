@@ -18,23 +18,16 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         //设置编码字符集
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
-
         //获取request的参数
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
-//        System.out.println(email);
-//        System.out.println(password);
-
         //使用dao中的登录模块，通过返回结果判断登录状态
         int res = Dao.login(email, password);
-//        System.out.println(res);
-
-
         Result result = new Result();
         if(res == 1){
             //成功登录
