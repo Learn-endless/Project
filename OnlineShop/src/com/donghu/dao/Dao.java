@@ -21,15 +21,11 @@ public class Dao {
     //检查当前注册的email是否出现在数据库中
     private static boolean checkEmail(String email){
         String sql = "select * from user where email = ?";
-        ArrayList<HashMap<String,Object>> list =  MyHelper.executeQuery(sql,new Object[]{email});
-        if(list.size() == 1){
-            //存在的话就不能插入，返回false
-            return false;
-        }else{
-            //数据库中没有的话就返回true
-            return true;
-        }
-    }
+        ArrayList<HashMap<String,Object>> list = MyHelper.executeQuery(sql,new Object[]{email});
+        //存在的话就不能插入，返回false
+        if(list.size() == 1){ return false; }
+        //数据库中没有的话就返回true
+        else{ return true; } }
 
     /**
      * 用户添加
@@ -39,40 +35,26 @@ public class Dao {
         return MyHelper.executeUpdate(sql,new Object[]{name,email,password});
     }
 
-    /**
-     * 用户注册模块
-     */
+
+
+     //用户注册模块
     public static int signUp(String email,String name,String password){
         //首先检查email是否存在
         boolean flg = checkEmail(email);
-        if(flg == true){
-            //表示不存在，将数据添加到数据库中
-            return insertUser(email, name, password);
-        }else{
-            //表示存在，直接返回false
-            return 0;
-        }
-    }
+        //表示不存在，将数据添加到数据库中
+        if(flg){ return insertUser(email, name, password);}
+        //表示存在，直接返回false
+        else{ return 0; } }
 
     //用户登录
     public static int login(String email, String password){
-        //先通过email查找
-        String sql = "select * from user where email = ?";
+        String sql = "select * from user where email = ?";    //先通过email查找
         ArrayList<HashMap<String, Object>> list = MyHelper.executeQuery(sql, new Object[]{email});
-        if(list.size() == 0){
-            return -1;
-        }
-        //然后匹对password
-        if(list.get(0).get("password").equals(password)){
-            return 1;
-        }else{
-            return 0;
-        }
-    }
+        if(list.size() == 0){ return -1; }//然后匹对password
+        if(list.get(0).get("password").equals(password)){ return 1;}
+        else{ return 0; } }
 
-    /**
-     * 商品列表查询
-     */
+    //商品列表查询
     public static ArrayList<HashMap<String, Object>> goodsList(){
         String sql = "select * from goods";
         return MyHelper.executeQuery(sql,null);

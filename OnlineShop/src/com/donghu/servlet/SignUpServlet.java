@@ -18,8 +18,7 @@ import java.io.IOException;
 @WebServlet("/signUp")
 public class SignUpServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //设置编码字符集
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
@@ -29,15 +28,14 @@ public class SignUpServlet extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         int res = 0;
+
         //3.调用dao层的方法，将用户的信息存放到数据库中。
         res = Dao.signUp(email, name, password);
         Result result = new Result();
-        if(res > 0){
-            result.setFlag("success");
-        }else{
-            result.setFlag("fail");
-            result.setData("邮箱已注册");
-        }
+        //新增成功
+        if(res > 0){ result.setFlag("success"); }
+        //邮箱已存在
+        else{ result.setFlag("fail");result.setData("邮箱已注册");}
         response.getWriter().append(JSON.toJSONString(result));
     }
 

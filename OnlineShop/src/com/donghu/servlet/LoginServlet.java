@@ -29,18 +29,12 @@ public class LoginServlet extends HttpServlet {
         //使用dao中的登录模块，通过返回结果判断登录状态
         int res = Dao.login(email, password);
         Result result = new Result();
-        if(res == 1){
-            //成功登录
-            result.setFlag("success");
-        }else if(res == -1){
-            //邮箱未注册
-            result.setFlag("fail");
-            result.setData("邮箱未注册");
-        }else{
-            //密码错误
-            result.setFlag("fail");
-            result.setData("密码错误");
-        }
+        //成功登录
+        if(res == 1){ result.setFlag("success"); }
+        //邮箱未注册
+        else if(res == -1){ result.setFlag("fail");result.setData("邮箱未注册");}
+        //密码错误
+        else{ result.setFlag("fail");result.setData("密码错误"); }
         response.getWriter().append(JSON.toJSONString(result));
     }
 

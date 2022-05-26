@@ -20,11 +20,11 @@ import java.util.HashMap;
 @WebServlet("/goodsList")
 public class GoodsListServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         //设置编码字符集
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
-
         //调用dao中的goodslist模块
         ArrayList<HashMap<String, Object>> list = Dao.goodsList();
         Result result = new Result("success",list);

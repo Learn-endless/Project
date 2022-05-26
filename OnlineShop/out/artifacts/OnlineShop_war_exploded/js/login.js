@@ -5,12 +5,10 @@ function signUp(){
 	var password=$("#password").val();
 	var confirmPassword=$("#confirmPassword").val();
 	var paramStr="name="+name+"&email="+email+"&password="+password+"&confirmPassword="+confirmPassword;
-	
 	if(email == "" || name == "" || password == "" || confirmPassword == ""){
 		showToast("信息填写不完整", 3000);
 		return;
 	}
-	
 	if(confirmPassword != password){
 		showToast("密码与确认密码不一致！", 3000);
 		return;
