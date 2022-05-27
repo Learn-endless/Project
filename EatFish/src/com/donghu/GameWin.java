@@ -22,7 +22,6 @@ public class GameWin extends JFrame {
     3 : 通关成功
     4 : 暂停
      */
-
     //设置游戏默认状态:
     public int state = 0;
 
@@ -139,22 +138,15 @@ public class GameWin extends JFrame {
     //12.重写paint方法
     @Override
     public void paint(Graphics g) {   //绘制的方法,
-
-        //6-3 懒加载模式初始化对象
-        offScreenimg = createImage(width,height);
+        offScreenimg = createImage(width,height);      //6-3 懒加载模式初始化对象
         Graphics gImage = offScreenimg.getGraphics();
         bg.paintSelf(gImage);
-        //14.在paint方法中，用switch语句定义游戏状态
-        switch (state){
+        switch (state){  //14.在paint方法中，用switch语句定义游戏状态
             case 0:
-                //15.在游戏状态为0的时候，设置启动背景图片
-                gImage.drawImage(GameUtils.bgimg,0,0,null);
-                //16.将画笔颜色改为与背景颜色不同的
-                gImage.setColor(Color.pink);
-                //17.设置字体样式
-                gImage.setFont(new Font("仿宋",Font.BOLD,80));
-                //18.为启动页面添加文字
-                gImage.drawString("开始",650,500);
+                gImage.drawImage(GameUtils.bgimg,0,0,null); //状态为0时启动背景图片
+                gImage.setColor(Color.pink); //16.将画笔颜色改为与背景颜色不同的
+                gImage.setFont(new Font("仿宋",Font.BOLD,80)); //17.设置字体样式
+                gImage.drawString("开始",650,500); //18.为启动页面添加文字
                 break;
             case 1:
                 //6-5
@@ -180,25 +172,17 @@ public class GameWin extends JFrame {
 
     //9-2批量添加敌方鱼类
     void logic(){
-        //每调用10次paint方法，绘制一条鱼
+        //每调用60次paint方法，绘制一条鱼
         if (time % 60 == 0) {
-            enamy1_right = new Enamy1Right();
-            enamy2_right = new Enamy2Right();
-            enamy3_right = new Enamy3Right();
-            enamy1_left = new Enamy1Left();
-            enamy2_left = new Enamy2Left();
-            enamy3_left = new Enamy3Left();
-
-            GameUtils.EnamyList.add(enamy1_right);
-            GameUtils.EnamyList.add(enamy2_right);
-            GameUtils.EnamyList.add(enamy3_right);
-            GameUtils.EnamyList.add(enamy1_left);
-            GameUtils.EnamyList.add(enamy2_left);
-            GameUtils.EnamyList.add(enamy3_left);
+            enamy1_right = new Enamy1Right(); GameUtils.EnamyList.add(enamy1_right);
+            enamy2_right = new Enamy2Right(); GameUtils.EnamyList.add(enamy2_right);
+            enamy3_right = new Enamy3Right(); GameUtils.EnamyList.add(enamy3_right);
+            enamy1_left = new Enamy1Left();   GameUtils.EnamyList.add(enamy1_left);
+            enamy2_left = new Enamy2Left();   GameUtils.EnamyList.add(enamy2_left);
+            enamy3_left = new Enamy3Left();   GameUtils.EnamyList.add(enamy3_left);
         }
-        for(Enamy enamy:GameUtils.EnamyList){
-            enamy.x = enamy.x+enamy.dir*enamy.speed;
-        }
+        for(Enamy enamy:GameUtils.EnamyList)
+        {enamy.x = enamy.x+enamy.dir*enamy.speed;}
     }
 
     //创建 main 方法来启动窗口
