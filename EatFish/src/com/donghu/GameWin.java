@@ -13,42 +13,31 @@ import java.awt.event.MouseEvent;
 2.创建一个普通的java类,然后继承JFrame类成为一个窗口类。
  */
 public class GameWin extends JFrame {
-
     /*
-    游戏状态：
-    0 : 未开始
-    1 : 游戏中
-    2 : 通关失败
-    3 : 通关成功
-    4 : 暂停
+    游戏状态：0 : 未开始 1 : 游戏中 2 : 通关失败 3 : 通关成功 4 : 暂停 5 : 重新开始
      */
     //设置游戏默认状态:
-    public int state = 0;
-
-    //地方鱼类
-    Enamy enamy1_right;
-    Enamy enamy2_right;
-    Enamy enamy3_right;
-
-    Enamy enamy1_left;
-    Enamy enamy2_left;
-    Enamy enamy3_left;
-
-    //我方鱼类
-    MyFish myFish = new MyFish();
-
+    public static int state = 0;
     //6-1模块
     Image offScreenimg;
     //6-2 背景类对象的创建
     Bg bg = new Bg();
 
+    //地方鱼类
+    Enamy enamy1_right;
+    Enamy enamy2_right;
+    Enamy enamy3_right;
+    Enamy enamy1_left;
+    Enamy enamy2_left;
+    Enamy enamy3_left;
+    //我方鱼类
+    MyFish myFish = new MyFish();
+
+    //9-3 计数器
+    int time = 0;
     //窗口的宽和高
     int width = 1440;
     int height = 900;
-
-    double random;
-    //9-3 计数器
-    int time = 0;
     //3.创建启动方法，来设置窗口属性
     public void launch(){
         //4.设置窗口是否可见
@@ -78,7 +67,6 @@ public class GameWin extends JFrame {
                 }
             }
         });
-
         //键盘移动
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -121,7 +109,6 @@ public class GameWin extends JFrame {
             }
         });
 
-
         //5-5 定义背景图片的循环使用，需要重复调用paint方法，所以在launch方法中添加一个while循环
         //每隔40毫秒调用一次paint方法
         while(true){
@@ -133,6 +120,7 @@ public class GameWin extends JFrame {
                 e.printStackTrace();
             }
         }
+
     }
 
     //12.重写paint方法
@@ -140,17 +128,22 @@ public class GameWin extends JFrame {
     public void paint(Graphics g) {   //绘制的方法,
         offScreenimg = createImage(width,height);      //6-3 懒加载模式初始化对象
         Graphics gImage = offScreenimg.getGraphics();
-        bg.paintSelf(gImage);
+        bg.paintSelf(gImage,myFish.level);
         switch (state){  //14.在paint方法中，用switch语句定义游戏状态
             case 0:
-                gImage.drawImage(GameUtils.bgimg,0,0,null); //状态为0时启动背景图片
-                gImage.setColor(Color.pink); //16.将画笔颜色改为与背景颜色不同的
-                gImage.setFont(new Font("仿宋",Font.BOLD,80)); //17.设置字体样式
-                gImage.drawString("开始",650,500); //18.为启动页面添加文字
+//                gImage.drawImage(GameUtils.bgimg,0,0,null); //状态为0时启动背景图片
+//                gImage.setColor(Color.pink); //16.将画笔颜色改为与背景颜色不同的
+//                gImage.setFont(new Font("仿宋",Font.BOLD,80)); //17.设置字体样式
+//                gImage.drawString("开始",650,500); //18.为启动页面添加文字
                 break;
             case 1:
-                //6-5
                 myFish.paintSelf(gImage);
+//                gImage.setColor(Color.pink); //将画笔颜色改为与背景颜色不同的
+//                gImage.setFont(new Font("仿宋",Font.BOLD,50)); //17.设置字体样式
+//                String str = "积分："+GameUtils.count;
+//                gImage.drawString(str,635,125); //18.为启动页面添加文字
+//                //6-5
+//                myFish.paintSelf(gImage);
                 logic();
                 for(Enamy e:GameUtils.EnamyList){
                     e.paintSelf(gImage);
@@ -159,8 +152,15 @@ public class GameWin extends JFrame {
             case 2:
                 break;
             case 3:
+                myFish.paintSelf(gImage);
+//                gImage.setColor(Color.black); //16.将画笔颜色改为与背景颜色不同的
+//                gImage.setFont(new Font("仿宋",Font.BOLD,80)); //设置字体样式
+//                gImage.drawString("积分达到:"+GameUtils.count,450,300);
+//                gImage.drawString("游戏通关",450,500);
                 break;
             case 4:
+                break;
+            case 5:
                 break;
             default:
                 break;
@@ -172,6 +172,27 @@ public class GameWin extends JFrame {
 
     //9-2批量添加敌方鱼类
     void logic(){
+
+        //设置关卡难度
+        if(GameUtils.count < 5){
+            GameUtils.level = 0;
+            myFish.level = 1;
+        }else if(GameUtils.count < 15){
+            GameUtils.level = 1;
+        }else if(GameUtils.count < 50){
+            GameUtils.level = 2;
+            myFish.level = 2;
+        }else if(GameUtils.count < 150){
+            GameUtils.level = 3;
+            myFish.level = 3;
+        }else if(GameUtils.count < 300){
+            GameUtils.level = 4;
+            myFish.level = 4;
+        }else {
+            //游戏通关
+            state = 3;
+        }
+
         //每调用60次paint方法，绘制一条鱼
         if (time % 60 == 0) {
             enamy1_right = new Enamy1Right(); GameUtils.EnamyList.add(enamy1_right);
@@ -181,10 +202,21 @@ public class GameWin extends JFrame {
             enamy2_left = new Enamy2Left();   GameUtils.EnamyList.add(enamy2_left);
             enamy3_left = new Enamy3Left();   GameUtils.EnamyList.add(enamy3_left);
         }
-        for(Enamy enamy:GameUtils.EnamyList)
-        {enamy.x = enamy.x+enamy.dir*enamy.speed;}
-    }
+        for(Enamy enamy:GameUtils.EnamyList) {
+            enamy.x = enamy.x+enamy.dir*enamy.speed;
+            //碰撞检测
+            if(myFish.grtRect().intersects(enamy.grtRect())){
+                //移除地方鱼
+//                GameUtils.EnamyList.remove(enamy);
+                enamy.x = -200;
+                enamy.y = -200;
+                //积分加1
+                GameUtils.count += enamy.count;
+                System.out.println(GameUtils.count);
 
+            }
+        }
+    }
     //创建 main 方法来启动窗口
     public static void main(String[] args) {
         GameWin gameWin = new GameWin();
