@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 /*
 窗口的创建
@@ -23,15 +24,16 @@ public class GameWin extends JFrame {
     //6-2 背景类对象的创建
     Bg bg = new Bg();
 
-    //地方鱼类
-    Enamy enamy1_right;
-    Enamy enamy2_right;
-    Enamy enamy3_right;
-    Enamy enamy1_left;
-    Enamy enamy2_left;
-    Enamy enamy3_left;
+    //敌方鱼类
+    Enamy enamy;
     //我方鱼类
     MyFish myFish = new MyFish();
+
+    //boss鱼
+    Boss boss;
+    double random;
+
+    boolean isboss = false;
 
     //9-3 计数器
     int time = 0;
@@ -106,6 +108,18 @@ public class GameWin extends JFrame {
                 if(e.getKeyCode()==68){
                     GameUtils.RIGHT = false;
                 }
+                //空格用来暂停
+                if(e.getKeyCode() == 32){
+                    switch (state){
+                        case 1:
+                            state = 4;
+                            GameUtils.drawWord(getGraphics(),"游戏暂停!",Color.black,50,600,500);
+                            break;
+                        case 4:
+                            state = 1;
+                            break;
+                    }
+                }
             }
         });
 
@@ -131,32 +145,32 @@ public class GameWin extends JFrame {
         bg.paintSelf(gImage,myFish.level);
         switch (state){  //14.在paint方法中，用switch语句定义游戏状态
             case 0:
-//                gImage.drawImage(GameUtils.bgimg,0,0,null); //状态为0时启动背景图片
-//                gImage.setColor(Color.pink); //16.将画笔颜色改为与背景颜色不同的
-//                gImage.setFont(new Font("仿宋",Font.BOLD,80)); //17.设置字体样式
-//                gImage.drawString("开始",650,500); //18.为启动页面添加文字
                 break;
             case 1:
                 myFish.paintSelf(gImage);
-//                gImage.setColor(Color.pink); //将画笔颜色改为与背景颜色不同的
-//                gImage.setFont(new Font("仿宋",Font.BOLD,50)); //17.设置字体样式
-//                String str = "积分："+GameUtils.count;
-//                gImage.drawString(str,635,125); //18.为启动页面添加文字
-//                //6-5
-//                myFish.paintSelf(gImage);
                 logic();
                 for(Enamy e:GameUtils.EnamyList){
                     e.paintSelf(gImage);
                 }
+                if(isboss){
+                    boss.x = boss.x+boss.dir*boss.speed;
+                    boss.paintSelf(gImage);
+                    if(boss.x < 0){
+                        gImage.setColor(Color.red);
+                        gImage.fillRect(boss.x,boss.y,2400,boss.height/30);
+                    }
+                }
                 break;
             case 2:
+                for(Enamy enamy : GameUtils.EnamyList){
+                    enamy.paintSelf(gImage);
+                }
+                if(isboss){
+                    boss.paintSelf(gImage);
+                }
                 break;
             case 3:
                 myFish.paintSelf(gImage);
-//                gImage.setColor(Color.black); //16.将画笔颜色改为与背景颜色不同的
-//                gImage.setFont(new Font("仿宋",Font.BOLD,80)); //设置字体样式
-//                gImage.drawString("积分达到:"+GameUtils.count,450,300);
-//                gImage.drawString("游戏通关",450,500);
                 break;
             case 4:
                 break;
@@ -192,28 +206,75 @@ public class GameWin extends JFrame {
             //游戏通关
             state = 3;
         }
-
-        //每调用60次paint方法，绘制一条鱼
-        if (time % 60 == 0) {
-            enamy1_right = new Enamy1Right(); GameUtils.EnamyList.add(enamy1_right);
-            enamy2_right = new Enamy2Right(); GameUtils.EnamyList.add(enamy2_right);
-            enamy3_right = new Enamy3Right(); GameUtils.EnamyList.add(enamy3_right);
-            enamy1_left = new Enamy1Left();   GameUtils.EnamyList.add(enamy1_left);
-            enamy2_left = new Enamy2Left();   GameUtils.EnamyList.add(enamy2_left);
-            enamy3_left = new Enamy3Left();   GameUtils.EnamyList.add(enamy3_left);
+        random = Math.random()*10;
+        switch(GameUtils.level){
+            case 4:
+                if(time % 100 == 0){
+                    enamy = new Boss();
+                    isboss = true;
+                    GameUtils.EnamyList.add(enamy);
+                }
+            case 3:
+            case 2:
+                //每调用60次paint方法，绘制一组条鱼
+                if (time % 30 == 0) {
+                    //敌方鱼出现的概率
+                    if(random <= 5){
+                        enamy = new Enamy3Right();
+                    }else{
+                        enamy = new Enamy3Left();
+                    }
+                    GameUtils.EnamyList.add(enamy);
+                }
+            case 1:
+                //每调用60次paint方法，绘制一组条鱼
+                if (time % 20 == 0) {
+                    //敌方鱼出现的概率
+                    if(random <= 5){
+                        enamy = new Enamy2Right();
+                    }else{
+                        enamy = new Enamy2Left();
+                    }
+                    GameUtils.EnamyList.add(enamy);
+                }
+            case 0:
+                //每调用60次paint方法，绘制一组条鱼
+                if (time % 10 == 0) {
+                    //敌方鱼出现的概率
+                    if(random <= 5){
+                        enamy = new Enamy1Right();
+                    }else{
+                        enamy = new Enamy1Left();
+                    }
+                    GameUtils.EnamyList.add(enamy);
+                }
+            default:
+                break;
         }
+
         for(Enamy enamy:GameUtils.EnamyList) {
             enamy.x = enamy.x+enamy.dir*enamy.speed;
+            if(isboss){
+                if(boss.grtRect().intersects(enamy.grtRect())){
+                    enamy.x = -200;
+                    enamy.y = -200;
+                }
+                if(boss.grtRect().intersects(myFish.grtRect())){
+                    state = 2;
+                }
+            }
             //碰撞检测
             if(myFish.grtRect().intersects(enamy.grtRect())){
-                //移除地方鱼
-//                GameUtils.EnamyList.remove(enamy);
-                enamy.x = -200;
-                enamy.y = -200;
-                //积分加1
-                GameUtils.count += enamy.count;
-                System.out.println(GameUtils.count);
-
+                if(myFish.level >= enamy.type){
+                    //移除地方鱼
+                    enamy.x = -200;
+                    enamy.y = -200;
+                    //积分加1
+                    GameUtils.count += enamy.count;
+                    System.out.println(GameUtils.count);
+                }else{
+                    state = 2;
+                }
             }
         }
     }

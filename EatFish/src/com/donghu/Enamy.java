@@ -34,10 +34,10 @@ public abstract class Enamy {
 
     //绘制自身的方法
     public void paintSelf(Graphics g){
-        g.drawImage(img,x,y,width,height,null);
+        g.drawImage(img,x,y,width*type,height*type,null);
     }
     //碰撞检测方法
     public Rectangle grtRect(){
-        return new Rectangle(x,y,width,height);
+        return new Rectangle(x,y,width*type,height*type);
     }
 }

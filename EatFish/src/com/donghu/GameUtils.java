@@ -43,9 +43,11 @@ public class GameUtils {
     //我方鱼类-金鱼-往左
     public static Image myfish_l_img = Toolkit.getDefaultToolkit().createImage("images/myFish/myfish_left.gif");
 
+    //添加boss鱼图片
+    public static Image boss_img = Toolkit.getDefaultToolkit().createImage("images/enemyFish/boss.gif");
+
 
     //绘制文字工具类
-
     /**
      * @param g       画笔
      * @param str     字符串内容

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="EatFish:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/EatFish_jar</output-path>
+    <root id="archive" name="EatFish.jar">
+      <element id="module-output" name="EatFish" />
+    </root>
+  </artifact>
+</component>

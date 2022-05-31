@@ -14,19 +14,27 @@ public class Bg {
                 GameUtils.drawWord(g,"开始",Color.red,80,700,500);
                 break;
             case 1:
-//                GameUtils.drawWord(g,"积分"+GameUtils.count,Color.ORANGE,50,200,120);
-//                GameUtils.drawWord(g,"难度"+GameUtils.level,Color.ORANGE,50,400,120);
-//                GameUtils.drawWord(g,"等级"+fishLevel,Color.ORANGE,50,600,120);
+                GameUtils.drawWord(g,"积分"+GameUtils.count,Color.ORANGE,50,200,120);
+                GameUtils.drawWord(g,"难度"+GameUtils.level,Color.ORANGE,50,400,120);
+                GameUtils.drawWord(g,"等级"+fishLevel,Color.ORANGE,50,600,120);
                 break;
             case 2:
+                GameUtils.drawWord(g,"积分"+GameUtils.count,Color.ORANGE,50,200,120);
+                GameUtils.drawWord(g,"难度"+GameUtils.level,Color.ORANGE,50,400,120);
+                GameUtils.drawWord(g,"等级"+fishLevel,Color.ORANGE,50,600,120);
+                GameUtils.drawWord(g,"失败",Color.red,80,700,500);
                 break;
             case 3:
-//                GameUtils.drawWord(g,"积分"+GameUtils.count,Color.ORANGE,50,200,120);
-//                GameUtils.drawWord(g,"难度"+GameUtils.level,Color.ORANGE,50,400,120);
-//                GameUtils.drawWord(g,"等级"+fishLevel,Color.ORANGE,50,600,120);
-//                GameUtils.drawWord(g,"胜利",Color.red,80,700,500);
+                GameUtils.drawWord(g,"积分"+GameUtils.count,Color.ORANGE,50,200,120);
+                GameUtils.drawWord(g,"难度"+GameUtils.level,Color.ORANGE,50,400,120);
+                GameUtils.drawWord(g,"等级"+fishLevel,Color.ORANGE,50,600,120);
+                GameUtils.drawWord(g,"胜利",Color.red,80,700,500);
                 break;
             case 4:
+                GameUtils.drawWord(g,"积分"+GameUtils.count,Color.ORANGE,50,200,120);
+                GameUtils.drawWord(g,"难度"+GameUtils.level,Color.ORANGE,50,400,120);
+                GameUtils.drawWord(g,"等级"+fishLevel,Color.ORANGE,50,600,120);
+                GameUtils.drawWord(g,"游戏暂停!!",Color.red,80,700,500);
                 break;
         }
     }
