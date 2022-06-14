@@ -30,11 +30,15 @@ public class LoginServlet extends HttpServlet {
         int res = Dao.login(email, password);
         Result result = new Result();
         //成功登录
-        if(res == 1){ result.setFlag("success"); }
-        //邮箱未注册
-        else if(res == -1){ result.setFlag("fail");result.setData("邮箱未注册");}
-        //密码错误
-        else{ result.setFlag("fail");result.setData("密码错误"); }
+        if(res == 1){
+            result.setFlag("success");
+            //邮箱未注册
+        }else if(res == -1){
+            result.setFlag("fail");result.setData("邮箱未注册");
+            //密码错误
+        }else{
+            result.setFlag("fail");result.setData("密码错误");
+        }
         response.getWriter().append(JSON.toJSONString(result));
     }
 

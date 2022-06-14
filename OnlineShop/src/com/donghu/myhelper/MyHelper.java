@@ -44,7 +44,7 @@ public class MyHelper {
     }
 
     /**
-     * 增删改
+     * 查
      * @param sql    传入的sql语句
      * @param param  需要动态注入的sql数据
      * @return       返回所查询的结果
@@ -77,6 +77,7 @@ public class MyHelper {
                 for(int i = 0; i < countCol; i++){
                     //获取列名
                     String columnName = metaData.getColumnName(i + 1);
+//                    metaData.getColumnLabel(i+1);     //拿别名
                     //获取当前列在当前行对应的值
                     Object object = resultSet.getObject(i + 1);
                     //放到map中

@@ -29,6 +29,7 @@ public class OrderListServlet extends HttpServlet {
         ArrayList<HashMap<String, Object>> list =  Dao.orderList();
 
         Result result = new Result("success",list);
+
         response.getWriter().append(JSON.toJSONString(result));
     }
 

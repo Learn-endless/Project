@@ -33,9 +33,12 @@ public class SignUpServlet extends HttpServlet {
         res = Dao.signUp(email, name, password);
         Result result = new Result();
         //新增成功
-        if(res > 0){ result.setFlag("success"); }
-        //邮箱已存在
-        else{ result.setFlag("fail");result.setData("邮箱已注册");}
+        if(res > 0){
+            result.setFlag("success");
+            //邮箱已存在
+        }else{
+            result.setFlag("fail");result.setData("邮箱已注册");
+        }
         response.getWriter().append(JSON.toJSONString(result));
     }
 

@@ -27,6 +27,7 @@ public class GoodsListServlet extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
         //调用dao中的goodslist模块
         ArrayList<HashMap<String, Object>> list = Dao.goodsList();
+
         Result result = new Result("success",list);
         response.getWriter().append(JSON.toJSONString(result));
     }

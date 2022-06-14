@@ -113,6 +113,7 @@ public class Dao {
     public static HashMap<String, Object> getById(int orderId, String email) {
         String sql = "select * from order_info where id = ?";
         ArrayList<HashMap<String, Object>> list = MyHelper.executeQuery(sql, new Object[]{orderId});
+        //对日期格式进行处理
         handle(list.get(0));
         return list.get(0);
     }
@@ -122,7 +123,7 @@ public class Dao {
      * 对时间进行处理，去掉秒后面的值
      */
     private static SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    public static void handle(HashMap<String,Object> map){
+    private static void handle(HashMap<String,Object> map){
         //先将Object对象拿到的时间变成字符串
         String buyTime = map.get("buyTime")+"";
         String payTime = map.get("payTime")+"";
